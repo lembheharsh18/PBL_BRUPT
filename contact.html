@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Font Awesome CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #00a9bf;
+            font-family: arial;
+        }
+
+        .btn {
+            position: absolute;
+            top: 110%;
+            left: 15%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            border: 5px solid #d06767;
+            padding: 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .btn p {
+            text-transform: uppercase;
+            text-align: center;
+            color: #ab2121;
+            font-weight: 1000;
+            font-size: 17px;
+            margin-left: 35px;
+            transition: all 0.5s ease;
+        }
+
+        .send {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #a12424;
+            transition: all 0.5s ease;
+        }
+
+        .send2 {
+            position: absolute;
+            top: 80px;
+            left: 30px;
+            color: #696666;
+            transition: all 0.5s ease;
+        }
+
+        /* Hover effects */
+        .btn:hover {
+            background: #f9c23c;
+            transition: all 0.5s ease;
+        }
+
+        .btn:hover p {
+            color: #696666;
+            transition: all 0.5s ease;
+            animation: move 1s linear 1s forwards;
+        }
+
+        .btn:hover .send {
+            top: -50px;
+            transition: all 2s ease;
+        }
+
+        .btn:hover .send2 {
+            top: 15px;
+            transition: all 2s ease;
+            animation: sending 1s linear 1s forwards;
+        }
+
+        /* CSS3 animation keyframes */
+        @keyframes sending {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translate(40px, -60px);
+            }
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-28px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>Contact Us</h1>
+                <form action="/contact" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Enter your message"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">
+                        <i class="fa fa-paper-plane-o fa-2x send" aria-hidden="true"></i>
+                        <i class="fa fa-paper-plane-o fa-2x send2" aria-hidden="true"></i>
+                        <p>Send</p>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

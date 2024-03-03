@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality Type Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Personality Type Test</h1>
+        <div class="question">
+            <h3>Question 1:</h3>
+            <p>Do you prefer to spend time with others or alone?</p>
+            <input type="radio" name="question1" value="I"> Alone (I)<br>
+            <input type="radio" name="question1" value="E"> Others (E)<br>
+        </div>
+        <div class="question">
+            <h3>Question 2:</h3>
+            <p>Are you more organized or spontaneous?</p>
+            <input type="radio" name="question2" value="S"> Organized (S)<br>
+            <input type="radio" name="question2" value="N"> Spontaneous (N)<br>
+        </div>
+        <div class="question">
+            <h3>Question 3:</h3>
+            <p>Do you prefer routine or variety?</p>
+            <input type="radio" name="question3" value="T"> Routine (T)<br>
+            <input type="radio" name="question3" value="F"> Variety (F)<br>
+        </div>
+        <div class="question">
+            <h3>Question 4:</h3>
+            <p>Do you prefer Order or are you Easygoing?</p>
+            <input type="radio" name="question 4" value="J"> Order (J)<br>
+            <input type="radio" name="question 4" value="P"> Easygoing (P)<br>
+        </div>
+        <button class="btn" onclick="submitTest()">Submit</button>
+    </div>
+
+    <script>
+        function submitTest() {
+            var responses = {};
+            var questions = document.querySelectorAll('.question');
+            questions.forEach(function(question, index) {
+                var questionNumber = index + 1;
+                var selectedOption = question.querySelector('input[type="radio"]:checked');
+                if (selectedOption) {
+                    responses['Question ' + questionNumber] = selectedOption.value;
+                } else {
+                    alert('Please answer question ' + questionNumber);
+                    return; // Exit function if any question is not answered
+                }
+            });
+
+            // Process test results (Example: Display results in alert)
+            var resultString = 'Test Results:\n';
+            for (var question in responses) {
+                resultString += question + ': ' + responses[question] + '\n';
+            }
+            alert(resultString);
+        }
+    </script>
+</body>
+</html>
+  
