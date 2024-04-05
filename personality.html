@@ -1,99 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personality Type Test</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2, h3, h4, h5, h6 {
-            margin-top: 0;
-        }
-        p {
-            margin-bottom: 20px;
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-        .btn {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBTI Personality Type Detection Test</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+  }
+
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 30px;
+  }
+
+  .question {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    display: none;
+  }
+
+  .question.active {
+    display: block;
+  }
+
+  .question h2 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .answers {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .answer {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .answer:hover {
+    background-color: #e0e0e0;
+  }
+
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  #results {
+    margin-top: 20px;
+    text-align: left;
+  }
+
+  .personality-type {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+  }
+
+  .personality-type h2 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .personality-type p {
+    color: #666;
+    margin-bottom: 5px;
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Personality Type Test</h1>
-        <div class="question">
-            <h3>Question 1:</h3>
-            <p>Do you prefer to spend time with others or alone?</p>
-            <input type="radio" name="question1" value="I"> Alone (I)<br>
-            <input type="radio" name="question1" value="E"> Others (E)<br>
-        </div>
-        <div class="question">
-            <h3>Question 2:</h3>
-            <p>Are you more organized or spontaneous?</p>
-            <input type="radio" name="question2" value="S"> Organized (S)<br>
-            <input type="radio" name="question2" value="N"> Spontaneous (N)<br>
-        </div>
-        <div class="question">
-            <h3>Question 3:</h3>
-            <p>Do you prefer routine or variety?</p>
-            <input type="radio" name="question3" value="T"> Routine (T)<br>
-            <input type="radio" name="question3" value="F"> Variety (F)<br>
-        </div>
-        <div class="question">
-            <h3>Question 4:</h3>
-            <p>Do you prefer Order or are you Easygoing?</p>
-            <input type="radio" name="question 4" value="J"> Order (J)<br>
-            <input type="radio" name="question 4" value="P"> Easygoing (P)<br>
-        </div>
-        <button class="btn" onclick="submitTest()">Submit</button>
-    </div>
+<div class="container">
+  <h1>Discover Your MBTI Personality Type</h1>
+  <p>Answer the following sassy questions to reveal your fabulous personality type.</p>
+  <div id="questions">
+    <!-- Questions will be added dynamically here -->
+  </div>
+  <button onclick="startTest()">Start Test</button>
+  <div id="results"></div>
+</div>
 
-    <script>
-        function submitTest() {
-            var responses = {};
-            var questions = document.querySelectorAll('.question');
-            questions.forEach(function(question, index) {
-                var questionNumber = index + 1;
-                var selectedOption = question.querySelector('input[type="radio"]:checked');
-                if (selectedOption) {
-                    responses['Question ' + questionNumber] = selectedOption.value;
-                } else {
-                    alert('Please answer question ' + questionNumber);
-                    return; // Exit function if any question is not answered
-                }
-            });
+<script>
+  var questions = [
+    { question: "Are you ready to rock this test?", answers: ["Absolutely!", "Of course!", "Let's do it!", "Bring it on!", "Heck yeah!"] },
+    { question: "Do you prefer chilling out with friends or having some alone time?", answers: ["With friends", "Alone", "Depends on my mood", "I'm a social butterfly", "I enjoy my own company"] },
+    { question: "When making decisions, are you more logical or emotional?", answers: ["Logical", "Emotional", "A bit of both", "Depends on the situation", "I go with my gut feeling"] },
+    { question: "Do you prefer planning your day or going with the flow?", answers: ["Planning", "Going with the flow", "A mix of both", "I'm spontaneous", "I like to have a flexible plan"] },
+    { question: "Are you a dreamer or a realist?", answers: ["Dreamer", "Realist", "A bit of both", "I dream big but stay grounded", "I'm a visionary"] },
+    { question: "Do you find it easy to connect with new people?", answers: ["Yes, I'm outgoing", "Not really, I'm more reserved", "Depends on the situation", "I'm friendly but selective", "I make friends effortlessly"] },
+    { question: "When facing challenges, do you rely more on your instincts or analysis?", answers: ["Instincts", "Analysis", "A bit of both", "I trust my intuition", "I analyze the situation thoroughly"] },
+    { question: "Do you prefer routine or variety in your daily life?", answers: ["Routine", "Variety", "A balance of both", "I like to spice things up", "I enjoy a structured routine"] },
+    { question: "Are you more of a leader or a follower?", answers: ["Leader", "Follower", "Depends on the situation", "I lead when needed, follow when necessary", "I pave my own path"] }
+  ];
 
-            // Process test results (Example: Display results in alert)
-            var resultString = 'Test Results:\n';
-            for (var question in responses) {
-                resultString += question + ': ' + responses[question] + '\n';
-            }
-            alert(resultString);
-        }
-    </script>
+  var userResponses = [];
+  var currentQuestionIndex = 0;
+
+  function startTest() {
+    var questionsDiv = document.getElementById('questions');
+    questionsDiv.innerHTML = '';
+    displayNextQuestion();
+  }
+
+  function displayNextQuestion() {
+    var questionsDiv = document.getElementById('questions');
+    var currentQuestion = questions[currentQuestionIndex];
+    var questionHTML = "<div class='question active'>";
+    questionHTML += "<h2>Question " + (currentQuestionIndex + 1) + "</h2>";
+    questionHTML += "<p>" + currentQuestion.question + "</p>";
+    questionHTML += "<div class='answers'>";
+
+    currentQuestion.answers.forEach(function(answer, answerIndex) {
+      questionHTML += "<div class='answer' onclick='selectAnswer(" + answerIndex + ")'>" + answer + "</div>";
+    });
+
+    questionHTML += "</div>";
+    questionHTML += "</div>";
+    questionsDiv.innerHTML = questionHTML;
+  }
+
+  function selectAnswer(answerIndex) {
+    userResponses[currentQuestionIndex] = answerIndex + 1;
+    var selectedAnswer = document.querySelectorAll('.question.active .answer')[answerIndex];
+    var allAnswers = document.querySelectorAll('.question.active .answer');
+    allAnswers.forEach(function(answer) {
+      answer.style.backgroundColor = '#fff';
+      answer.style.color = '#333';
+    });
+    selectedAnswer.style.backgroundColor = '#4CAF50';
+    selectedAnswer.style.color = '#fff';
+    setTimeout(function() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        displayNextQuestion();
+      } else {
+        processResponses();
+      }
+    }, 500); // Display next question after 0.5s
+  }
+
+  function processResponses() {
+    var resultsDiv = document.getElementById('results');
+    var resultHTML = "<h2>Test Results</h2>";
+
+    // Calculate average scores for each dichotomy
+    var avgEvsI = (userResponses[0] + userResponses[1]) / 2;
+    var avgSvsN = (userResponses[2] + userResponses[3]) / 2;
+    var avgTvsF = (userResponses[4] + userResponses[5]) / 2;
+    var avgJvsP = (userResponses[6] + userResponses[7]) / 2;
+
+    // Determine MBTI personality type
+    var mbtiType = "";
+
+    if (avgEvsI >= 4) {
+      mbtiType += "E";
+    } else {
+      mbtiType += "I";
+    }
+
+    if (avgSvsN >= 4) {
+      mbtiType += "N";
+    } else {
+      mbtiType += "S";
+    }
+
+    if (avgTvsF >= 4) {
+      mbtiType += "T";
+    } else {
+      mbtiType += "F";
+    }
+
+    if (avgJvsP >= 4) {
+      mbtiType += "J";
+    } else {
+      mbtiType += "P";
+    }
+
+    // Map MBTI type to description
+    var mbtiDescription = {
+      "ISTJ": "Logistician",
+      "ISFJ": "Defender",
+      "INFJ": "Advocate",
+      "INTJ": "Architect",
+      "ISTP": "Virtuoso",
+      "ISFP": "Adventurer",
+      "INFP": "Mediator",
+      "INTP": "Logician",
+      "ESTP": "Entrepreneur",
+      "ESFP": "Entertainer",
+      "ENFP": "Campaigner",
+      "ENTP": "Debater",
+      "ESTJ": "Executive",
+      "ESFJ": "Consul",
+      "ENFJ": "Protagonist",
+      "ENTJ": "Commander"
+    };
+
+    if (mbtiDescription[mbtiType]) {
+      resultHTML += "<div class='personality-type'>";
+      resultHTML += "<h2>Your MBTI Personality Type</h2>";
+      resultHTML += "<p>Type: <strong>" + mbtiType + "</strong></p>";
+      resultHTML += "<p>Description: <strong>" + mbtiDescription[mbtiType] + "</strong></p>";
+      resultHTML += "</div>";
+    } else {
+      resultHTML += "<p>No MBTI personality type identified.</p>";
+    }
+
+    resultsDiv.innerHTML = resultHTML;
+  }
+</script>
 </body>
 </html>
-  
