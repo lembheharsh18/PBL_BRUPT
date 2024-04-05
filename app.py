@@ -1,31 +1,28 @@
-from flask import Flask, render_template, request, redirect, url_for
-from flask import redirect, url_for
-import pickle
 
+from flask import Flask, render_template, request, redirect, url_for
+import pickle
 import numpy as np
+import pandas as pd
 
 app = Flask(__name__)
 encoding = 'utf-16'
-popular_df = pickle.load(open('popular.pkl', 'rb'), encoding=encoding)
-pt = pickle.load(open('pt.pkl', 'rb'), encoding=encoding)
-books = pickle.load(open('books.pkl', 'rb'), encoding=encoding)
-similarity_scores = pickle.load(open('similarity_scores.pkl', 'rb'), encoding=encoding)
+popular_df = pd.read_pickle('popular.pkl')
+pt = pd.read_pickle('pt.pkl')
+books = pd.read_pickle('books.pkl')
+similarity_scores = pd.read_pickle('similarity_scores.pkl')
+
 
 @app.route('/')
 def index():
-    return render_template('index.html',
-                           book_name=list(popular_df['Book-Title'].values),
-                           author=list(popular_df['Book-Author'].values),
-                           image=list(popular_df['Image-URL-M'].values),
-                           votes=list(popular_df['num_ratings'].values),
-                           rating=list(popular_df['avg_rating'].values)
-                           )
+    return render_template('index.html')
+
 
 @app.route('/recommend')
 def recommend_ui():
     return render_template('recommend.html')
 
-@app.route('/recommend', methods=['POST'])
+
+@app.route('/recommend_books', methods=['POST'])
 def recommend():
     user_input = request.form.get('user_input')
     try:
@@ -49,12 +46,8 @@ def recommend():
 
     return render_template('recommend.html', data=data, message="")
 
-@app.route('/contact')
-def contact_ui():
-    return render_template('contact.html')
 
-
-@app.route('/contact', methods=['POST'])
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
         # Retrieve form data from the request
@@ -71,10 +64,27 @@ def contact():
 
         # Redirect to the thank_you.html page
         return redirect(url_for('thank_you'))
+    else:
+        return render_template('contact.html')
+
 
 @app.route('/thank_you')
 def thank_you():
     return render_template('thank_you.html')
+
+@app.route('/Top50Books')
+def top50():
+    return render_template('Top50Books.html',
+                           book_name=list(popular_df['Book-Title'].values),
+                           author=list(popular_df['Book-Author'].values),
+                           image=list(popular_df['Image-URL-M'].values),
+                           votes=list(popular_df['num_ratings'].values),
+                           rating=list(popular_df['avg_rating'].values)
+                           )
+
+@app.route('/personality')
+def personality():
+    return render_template('personality.html')
 
 
 if __name__ == '__main__':
